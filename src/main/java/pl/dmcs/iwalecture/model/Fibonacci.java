@@ -1,22 +1,27 @@
 package pl.dmcs.iwalecture.model;
 
+import java.math.BigInteger;
 
 public class Fibonacci {
 
-    private int result;
+    private String result;
+    private int nthNumber;
     public void setNumber(int n) {
 
-        int f[] = new int[n + 2];
-
-        f[0] = 0;
-        f[1] = 1;
+        nthNumber = n;
+        BigInteger fibPrev = BigInteger.ZERO;
+        BigInteger fibCur = BigInteger.ONE;
 
         for (int i = 2; i <= n; i++) {
-            f[i] = f[i - 1] + f[i - 2];
+            BigInteger temp = fibCur;
+            fibCur = fibCur.add(fibPrev);
+            fibPrev = temp;
         }
 
-        this.result = f[n];
+        result = fibCur.toString();
     }
 
-    public int getNumber() { return result; }
+    public String getNumber() { return result; }
+
+    public String getNthNumber() { return String.valueOf(nthNumber); }
 }

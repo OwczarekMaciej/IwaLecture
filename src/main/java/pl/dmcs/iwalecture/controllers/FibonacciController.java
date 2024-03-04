@@ -20,7 +20,7 @@ class FibonacciController {
     @RequestMapping(value = "/calcNumber.html", method = RequestMethod.POST)
     public String calcNumber(@ModelAttribute("fibonacci") Fibonacci fibonacci)
     {
-        System.out.println(fibonacci.getNumber());
+        System.out.println(fibonacci.getNthNumber() + " - " + fibonacci.getNumber());
         return "redirect:fibonacci";
     }
 }
