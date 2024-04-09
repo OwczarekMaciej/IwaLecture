@@ -16,7 +16,6 @@ public class Account {
     private String accountName;
 
     @JsonIgnore
-    // Commented out due to simplify http requests sent from angular app
     @OneToOne(mappedBy = "account")
     private Student student;
 
@@ -36,8 +35,6 @@ public class Account {
         this.accountName = accountName;
     }
 
-
-    // Commented out due to simplify http requests sent from angular app
     public Student getStudent() {
         return student;
     }

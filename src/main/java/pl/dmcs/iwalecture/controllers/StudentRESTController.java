@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.dmcs.iwalecture.model.Student;
+import pl.dmcs.iwalecture.repository.AddressRepository;
 import pl.dmcs.iwalecture.repository.StudentRepository;
 
 import java.util.List;
@@ -14,16 +15,27 @@ import java.util.Map;
 @RequestMapping("/students")
 public class StudentRESTController {
     private StudentRepository studentRepository;
-
+    private AddressRepository addressRepository;
     @Autowired
-    public StudentRESTController(StudentRepository studentRepository) { this.studentRepository = studentRepository; }
+    public StudentRESTController(StudentRepository studentRepository, AddressRepository addressRepository) {
+        this.studentRepository = studentRepository;
+        this.addressRepository = addressRepository;
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Student> findAllStudents() { return studentRepository.findAll();
     }
 
     @RequestMapping(method = RequestMethod.POST)
+    //@PostMapping
     public ResponseEntity<Student> addStudent(@RequestBody Student student) {
+
+        // Commented out due to simplify http requests sent from angular app
+        if (student.getAddress().getId() <= 0 )
+        {
+            addressRepository.save(student.getAddress());
+        }
+        // Commented out due to simplify http requests sent from angular app
         studentRepository.save(student);
         return new ResponseEntity<Student>(student, HttpStatus.CREATED);
     }
