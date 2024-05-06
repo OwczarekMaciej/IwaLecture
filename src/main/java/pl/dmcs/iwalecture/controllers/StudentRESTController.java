@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/students")
 public class StudentRESTController {
     private StudentRepository studentRepository;
@@ -31,10 +32,10 @@ public class StudentRESTController {
     public ResponseEntity<Student> addStudent(@RequestBody Student student) {
 
         // Commented out due to simplify http requests sent from angular app
-        if (student.getAddress().getId() <= 0 )
-        {
-            addressRepository.save(student.getAddress());
-        }
+//        if (student.getAddress().getId() <= 0 )
+//        {
+//            addressRepository.save(student.getAddress());
+//        }
         // Commented out due to simplify http requests sent from angular app
         studentRepository.save(student);
         return new ResponseEntity<Student>(student, HttpStatus.CREATED);
@@ -52,11 +53,12 @@ public class StudentRESTController {
         return new ResponseEntity<Student>(HttpStatus.NO_CONTENT);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Student> updateStudent(@RequestBody Student student, @PathVariable("id") long id){
+    @RequestMapping(value="/{id}", method = RequestMethod.PUT)
+    //@PutMapping("/{id}")
+    public ResponseEntity<Student> updateStudent(@RequestBody Student student, @PathVariable("id") long id) {
         student.setId(id);
         studentRepository.save(student);
-        return new ResponseEntity<Student>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<Student>(student, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PATCH)
